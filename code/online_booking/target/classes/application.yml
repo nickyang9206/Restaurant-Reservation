@@ -1,0 +1,15 @@
+spring:
+  # mysql ��������
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/ctdz?characterEncoding=utf8&useSSL=false
+    username: root
+    password: "123456"
+
+# mybatis �����ļ���ַ
+mybatis:
+  config-location: classpath:mybatis-config.xml
+
+# �����˿�����
+server:
+  port: 8080
