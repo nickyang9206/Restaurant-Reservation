@@ -10,6 +10,7 @@ public class InterceptorConfigurerAdapter extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        System.out.println("注册拦截器");
         registry.addInterceptor(new TokenInterceptor());
         super.addInterceptors(registry);
     }

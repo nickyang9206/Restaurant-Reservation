@@ -4,7 +4,6 @@ import io.jsonwebtoken.Jwts;
 import online_booking.bl.common.JwtUtil;
 import online_booking.bl.common.R;
 import online_booking.bl.common.Result;
-import online_booking.bl.entity.User;
 import online_booking.bl.mapper.TokenMapper;
 import online_booking.bl.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;

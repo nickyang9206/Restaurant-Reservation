@@ -17,11 +17,11 @@ public class XMLUtil {
     }
 
     public static void log(String name, String content, String status) throws IOException {
-        File logFile = new File("log.xml");
+        File logFile = new File("./log.xml");
         if (!logFile.exists()) {
             Document document = DocumentHelper.createDocument();
             document.addElement("logroot");
-            FileWriter out = new FileWriter("log.xml");
+            FileWriter out = new FileWriter("./log.xml");
             document.write(out);
             out.close();
         }
@@ -46,7 +46,7 @@ public class XMLUtil {
         logEl.addAttribute("status", status);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         logEl.addAttribute("time", df.format(new Date()));
-        FileWriter out = new FileWriter("log.xml");
+        FileWriter out = new FileWriter("./log.xml");
         document.write(out);
         out.close();
     }

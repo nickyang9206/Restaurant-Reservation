@@ -1,2 +1,2 @@
 # Restaurant-Reservation
-It is a team work to do restaurant reservation
+Team work Source code for restaurant reservation application
