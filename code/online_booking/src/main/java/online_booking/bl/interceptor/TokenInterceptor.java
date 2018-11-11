@@ -18,6 +18,8 @@ public class TokenInterceptor implements HandlerInterceptor {
     public TokenInterceptor() {
         paths.add("/user/login");
         paths.add("/user/register");
+        paths.add("/restaurant/list");
+        paths.add("/restaurant/types");
     }
 
     @Override

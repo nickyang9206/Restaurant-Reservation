@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="online_booking.bl.mapper.RestaurantMapper">
+    <insert id="add" parameterType="java.util.HashMap">
+      INSERT INTO restaurants
+      (user_id, name, type)
+      VALUES
+      (#{user_id}, #{name}, #{type})
+        <selectKey keyProperty="id" order="AFTER" resultType="Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <!-- 餐厅列表 -->
+    <select id="list" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        Select
+        u.username,rt.name,rt.type,rt.id
+        from restaurants rt
+        left join users u on u.id = rt.user_id
+        where 1 = 1
+        <if test="user_id != null">
+            and rt.user_id = #{user_id}
+        </if>
+        <if test="type != null">
+            and rt.type = #{type}
+        </if>
+        <if test="name != null">
+            and rt.name like '%#{name}%'
+        </if>
+    </select>
+
+    <!-- 获取餐厅 -->
+    <select id="show" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        Select
+        rt.id,u.username,rt.name,rt.type
+        from restaurants rt
+        left join users u on u.id = rt.user_id
+        where 1 = 1
+        <if test="restaurant_id != null">
+            and rt.id = #{restaurant_id}
+        </if>
+    </select>
+
+    <!-- 菜单列表 -->
+    <select id="dishsList" parameterType="int" resultType="java.util.HashMap">
+        Select
+        *
+        from dishs
+        where restaurant_id = #{restaurant_id}
+    </select>
+
+    <!-- 添加菜单 -->
+    <insert id="dishsAdd" parameterType="java.util.HashMap">
+      INSERT INTO dishs
+      (restaurant_id, name, img)
+      VALUES
+      (#{restaurant_id}, #{name}, #{img});
+    </insert>
+
+    <!-- 坐席列表 -->
+    <select id="seatList" parameterType="int" resultType="java.util.HashMap">
+        Select
+        *
+        from seats
+        where restaurant_id = #{restaurant_id}
+    </select>
+
+    <!-- 添加坐席 -->
+    <insert id="seatAdd" parameterType="java.util.HashMap">
+      INSERT INTO seats
+      (restaurant_id, name, total)
+      VALUES
+      (#{restaurant_id}, #{name}, #{total});
+    </insert>
+
+    <!-- 坐席已定数量 -->
+    <select id="bookingCount" parameterType="java.util.HashMap" resultType="int">
+        Select
+        count(*)
+        from bookings
+        where seat_id = #{seat_id} and status = 1 and date = #{date}
+    </select>
+
+    <!-- 获取餐厅类型列表 -->
+    <select id="types" parameterType="int" resultType="String">
+        Select
+        type
+        from restaurants
+        group by type
+    </select>
+</mapper>

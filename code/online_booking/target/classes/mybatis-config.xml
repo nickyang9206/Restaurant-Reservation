@@ -9,6 +9,7 @@
     </typeAliases>
     <!-- mapper文件位置 -->
     <mappers>
-        <!--<mapper resource="mapper/LockMapper.xml"/>-->
+        <mapper resource="mapper/RestaurantMapper.xml"/>
+        <mapper resource="mapper/ActionMapper.xml"/>
     </mappers>
 </configuration>

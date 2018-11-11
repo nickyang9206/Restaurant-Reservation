@@ -15,31 +15,20 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserApi {
-
-    public static String token = "";
+public class MessageApi {
 
     @Autowired
     private WebApplicationContext context;
 
     private MockMvc mockMvc;
+    private String token = "";
 
     @Before
-    public void setupMockMvc() {
+    public void setupMockMvc() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-    }
 
-    @Test
-    public void login() throws Exception {
         String api = "/user/login";
 
         MvcResult mvcResult = mockMvc.perform(
@@ -59,24 +48,23 @@ public class UserApi {
     }
 
     @Test
-    public void register() throws Exception {
-        String api = "/user/register";
+    public void list() throws Exception {
+        String api = "/messages/list";
 
         MvcResult mvcResult = mockMvc.perform(
                 MockMvcRequestBuilders
-                        .post(api)
-                        .param("username", "user18")
-                        .param("password", "123456")
-                        .param("identity", "1")
-        ).andReturn();
+                        .get(api)
+                        .header("Authorization", "token " + token)
+        )
+                .andReturn();
         String content = mvcResult.getResponse().getContentAsString();
         JSONObject result = JSON.parseObject(content);
         if (result.getLongValue("code") != 0) {
             XMLUtil.log(api, result.getString("msg"), "error");
             Assert.fail();
         } else {
+            System.out.println(result.toString());
             XMLUtil.log(api, result.getString("msg"), "ok");
         }
     }
-
 }

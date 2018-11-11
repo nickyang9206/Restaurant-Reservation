@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public Result handler(Exception e) {
-
+        e.printStackTrace();
         return R.error(-1, e.getMessage());
 
 
